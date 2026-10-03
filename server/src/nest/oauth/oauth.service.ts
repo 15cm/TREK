@@ -15,7 +15,7 @@ import { AuditService } from '../audit/audit.service';
 import { logWarn } from '../audit/audit-log.logger';
 import { DatabaseService } from '../database/database.service';
 import {
-  ACCESS_TOKEN_TTL_S,
+  getAccessTokenTtlSeconds,
   CODE_CHALLENGE_RE,
   CODE_VERIFIER_RE,
   REFRESH_ROTATION_GRACE_MS,
@@ -291,7 +291,8 @@ export class OauthService {
     const refreshHash = hashToken(rawRefresh);
 
     const now           = new Date();
-    const accessExpiry  = new Date(now.getTime() + ACCESS_TOKEN_TTL_S * 1000);
+    const accessTokenTtlS = getAccessTokenTtlSeconds();
+    const accessExpiry  = new Date(now.getTime() + accessTokenTtlS * 1000);
     const refreshExpiry = new Date(now.getTime() + REFRESH_TOKEN_TTL_MS);
 
     this.db.run(`
@@ -304,7 +305,7 @@ export class OauthService {
       access_token:  rawAccess,
       refresh_token: rawRefresh,
       token_type:    'Bearer',
-      expires_in:    ACCESS_TOKEN_TTL_S,
+      expires_in:    accessTokenTtlS,
       scope:         scopes.join(' '),
     };
   }
@@ -332,7 +333,8 @@ export class OauthService {
     const placeholderHash = randomBytes(32).toString('hex');
 
     const now         = new Date();
-    const accessExpiry = new Date(now.getTime() + ACCESS_TOKEN_TTL_S * 1000);
+    const accessTokenTtlS = getAccessTokenTtlSeconds();
+    const accessExpiry = new Date(now.getTime() + accessTokenTtlS * 1000);
 
     this.db.run(`
       INSERT INTO oauth_tokens
@@ -343,7 +345,7 @@ export class OauthService {
     return {
       access_token: rawAccess,
       token_type:   'Bearer',
-      expires_in:   ACCESS_TOKEN_TTL_S,
+      expires_in:   accessTokenTtlS,
       scope:        scopes.join(' '),
     };
   }

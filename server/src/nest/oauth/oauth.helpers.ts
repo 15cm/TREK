@@ -6,7 +6,11 @@ import crypto, { createHash, randomBytes } from 'crypto';
 // Constants
 // ---------------------------------------------------------------------------
 
-export const ACCESS_TOKEN_TTL_S = 60 * 60;                  // 1 hour
+/** MCP OAuth access-token lifetime in seconds, configurable at container runtime. */
+export function getAccessTokenTtlSeconds(): number {
+  const configured = Number.parseInt(process.env.MCP_ACCESS_TOKEN_TTL ?? '', 10);
+  return Number.isSafeInteger(configured) && configured > 0 ? configured : 60 * 60;
+}
 export const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days rolling
 
 /**
