@@ -246,7 +246,6 @@ For setup instructions, see [MCP-Overview](MCP-Overview).
 | `MCP_RATE_LIMIT`           | Max MCP API requests per minute, counted **per user and per OAuth client** — a user connected from two MCP clients gets this budget twice. Requests made with a static `trek_` token or a session JWT carry no client and share one further bucket per user. | `300`   |
 | `MCP_MAX_SESSION_PER_USER` | Max concurrent MCP sessions per user. At the cap the user's least-recently-active session is closed to make room — requests are not rejected. | `20`    |
 | `MCP_SESSION_TTL`          | Session idle timeout in seconds (max 86400)                                                              | `3600`  |
-| `MCP_ACCESS_TOKEN_TTL`     | OAuth access-token lifetime in seconds                                                                   | `3600`  |
 | `MCP_SSE_KEEPALIVE`        | SSE keep-alive ping interval in seconds — keeps the stream alive through reverse proxies. `0` disables the pings; an open stream still refreshes the session's idle timeout. | `25`    |
 
 ---

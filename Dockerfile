@@ -120,7 +120,6 @@ RUN mkdir -p /app/data/logs /app/uploads/files /app/uploads/covers /app/uploads/
 ENV NODE_ENV=production
 ENV NODE_USE_ENV_PROXY=1
 ENV PORT=3000
-ENV MCP_ACCESS_TOKEN_TTL=3600
 ARG APP_VERSION=dev
 ENV APP_VERSION=${APP_VERSION}
 

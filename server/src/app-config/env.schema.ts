@@ -106,7 +106,6 @@ export const envSchema = z.object({
 
   // MCP
   MCP_SESSION_TTL: positiveNumber,
-  MCP_ACCESS_TOKEN_TTL: integer(1, Number.MAX_SAFE_INTEGER, 'must be a positive integer number of seconds'),
   MCP_MAX_SESSION_PER_USER: positiveNumber,
   MCP_SSE_KEEPALIVE: integer(0, Number.MAX_SAFE_INTEGER, 'must be a non-negative integer (seconds, 0 disables)'),
   MCP_RATE_LIMIT: positiveNumber,
